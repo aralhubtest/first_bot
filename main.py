@@ -70,7 +70,7 @@ async def handle_location(message: Message) -> None:
 
 @dp.message(F.text == "Кнопка 1")
 async def hello(soobsheine: Message):
-    await soobsheine.answer("salam")
+    await soobsheine.answer_photo(photo="AgACAgIAAxkBAAN8aJBGMPeNirxKZ3M3Gzc3I2V8QmYAAr_xMRsnMoFIsOyygxKuiWoBAAMCAAN4AAM2BA", caption='Babur Developer')
 
 
 @dp.message()  # if True
