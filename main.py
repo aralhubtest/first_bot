@@ -7,7 +7,7 @@ import logging
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message
-
+from keyboars import keyboard_single_row
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -19,6 +19,9 @@ TOKEN = os.getenv("BOT_TOKEN")  # 8420270855:AAF7Ral1S9xtCd-nqQgCUgHKIO8MwKP2k_A
 dp = Dispatcher()
 
 
+photo_id = ""
+
+
 async def sum_numbers(a: int, b: int):
     return a + b
 
@@ -26,25 +29,51 @@ async def sum_numbers(a: int, b: int):
 # Command handler
 @dp.message(Command("start"))
 async def command_start_handler(message: Message):
-    await message.reply(f"Hello ! {message.from_user.first_name}")
+    await message.reply(
+        text=f"Hello ! {message.from_user.first_name}", reply_markup=keyboard_single_row
+    )
 
 
 @dp.message(Command("help"))
 async def help_information(message: Message):
-    await message.answer_photo('AgACAgIAAxkBAANtaJBDsYT9o7upw9i2LS9FAwM8bDsAArDxMRsnMoFIjjwd50VUF7EBAAMCAANzAAM2BA')
+    await message.answer_video(
+        "BAACAgIAAxkBAAPLaJBLFOKmoU8v8HABiMLMjB5OdawAArt-AAJ2LYhIh9LHhReHhFg2BA"
+    )
 
-@dp.message(F.text == "test") # if text == test
+
+@dp.message(F.text == "test")  # if text == test
 async def magicflter(message: Message):
     await message.answer(f"chat_id = {message.chat.id}")
 
 
 @dp.message(F.photo)
+async def handle_photo(message: Message) -> None:
+    await message.answer("Спасибо за фото!")
+
+
+@dp.message(F.sticker)
+async def handle_sticker(message: Message) -> None:
+    await message.answer("Классный стикер!")
+
+
+@dp.message(F.voice)
+async def handle_voice(message: Message) -> None:
+    await message.answer("Я получил голосовое сообщение.")
+
+
+@dp.message(F.location)
+async def handle_location(message: Message) -> None:
+    await message.answer(
+        f"Ваши координаты: {message.location.latitude},{message.location.longitude}"
+    )
+
+
+@dp.message(F.text == "Кнопка 1")
 async def hello(soobsheine: Message):
-    await soobsheine.reply(f'id = {soobsheine.photo[-1].file_id} - size = {soobsheine.photo[-1].file_size} uniqid = {soobsheine.photo[-1].file_unique_id}')
-    await soobsheine.reply(f'id = {soobsheine.photo[0].file_id} - size = {soobsheine.photo[0].file_size} uniqid = {soobsheine.photo[0].file_unique_id}')
+    await soobsheine.answer("salam")
 
 
-@dp.message() #if True
+@dp.message()  # if True
 async def echo(message: Message):
     await message.answer(message.text[::-1])
 
