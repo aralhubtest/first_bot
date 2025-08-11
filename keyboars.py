@@ -13,11 +13,3 @@ keyboard_single_row = ReplyKeyboardMarkup(
     input_field_placeholder="Выберите действие..." # Подсказка в поле ввода
 
 )
-
-# Создание клавиатуры с несколькими кнопками в ряду
-# keyboard_multi_row = ReplyKeyboardMarkup(
-#     keyboard=[[button_1, button_2], [button_3]],
-#     resize_keyboard=True
-# )
-
-
