@@ -9,8 +9,9 @@ from aiogram.filters import Command
 from aiogram.types import Message, FSInputFile
 from generate_qr import generate as qr_gen
 # from keyboars import keyboard_single_row
-from test_api import get_weather, WeatherInfo
-# Configure logging
+from test_api import get_weather
+
+
 logging.basicConfig(level=logging.INFO)
 
 load_dotenv()
@@ -44,8 +45,6 @@ async def wheather(message: Message):
     f'seziledi kak:{data.feels_like}'
     if data else 'Onday gorod joq')
     await message.reply(text=response_text)
-
-
 
 
 # Run the bot
