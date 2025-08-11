@@ -9,7 +9,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, FSInputFile
 from generate_qr import generate as qr_gen
 # from keyboars import keyboard_single_row
-
+from test_api import get_weather, WeatherInfo
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
@@ -26,11 +26,26 @@ async def command_start_handler(message: Message):
     await message.reply(
         text=f"Hello ! {message.from_user.first_name}", reply_markup=None)
 
-@dp.message()
+
+@dp.message(F.text == 'Кнопка 1')
 async def generate(message: Message):
     output_file_path = qr_gen(message.text, file_path=f'qr_{message.from_user.id}.png')
     photo = FSInputFile(output_file_path)
     await message.answer_photo(photo=photo, caption=message.text)
+
+
+@dp.message()
+async def wheather(message: Message):
+    data = await get_weather(message.text)
+    response_text = (f'gorod: {data.name}\n'
+    f'temperatura:{data.temp}\n'
+    f'pogoda:{data.weather}\n'
+    f'samal tezligi:{data.wind_speed}\n'
+    f'seziledi kak:{data.feels_like}'
+    if data else 'Onday gorod joq')
+    await message.reply(text=response_text)
+
+
 
 
 # Run the bot
